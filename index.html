@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>3D Car Customizer</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="style.css">
+
+<!-- Three.js CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128/examples/js/controls/OrbitControls.js"></script>
+</head>
+
+<body>
+
+<header>
+  <h1>🚗 3D Car Customization Studio</h1>
+</header>
+
+<div class="container">
+
+  <!-- 3D VIEW -->
+  <div class="viewer">
+    <div id="car3d"></div>
+  </div>
+
+  <!-- CUSTOMIZATION -->
+  <div class="panel">
+
+    <h2>Customize Your Car</h2>
+
+    <!-- MODEL -->
+    <label>Car Model</label>
+    <select id="model">
+      <option value="20000">Sedan</option>
+      <option value="26000">SUV (+6000)</option>
+      <option value="32000">Sports (+12000)</option>
+    </select>
+
+    <!-- COLOR -->
+    <label>Color</label>
+    <input type="color" id="colorPicker" value="#ff0000">
+
+    <!-- ENGINE -->
+    <label>Engine Type</label>
+    <select id="engine">
+      <option value="0">Petrol</option>
+      <option value="1500">Diesel (+1500)</option>
+      <option value="3000">Hybrid (+3000)</option>
+      <option value="5000">Electric (+5000)</option>
+    </select>
+
+    <!-- INTERIOR -->
+    <label>Interior</label>
+    <select id="interior">
+      <option value="0">Fabric</option>
+      <option value="2000">Leather (+2000)</option>
+      <option value="3500">Luxury (+3500)</option>
+    </select>
+
+    <!-- PRICE -->
+    <div class="price">
+      Total Price: $<span id="price">20000</span>
+    </div>
+
+    <!-- BUTTONS -->
+    <button onclick="saveConfig()">Save Needs</button>
+    <button onclick="editConfig()">Edit Needs</button>
+
+    <!-- FEEDBACK -->
+    <h3>Customer Feedback</h3>
+    <textarea id="feedback"></textarea>
+    <button onclick="saveFeedback()">Submit Feedback</button>
+
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
