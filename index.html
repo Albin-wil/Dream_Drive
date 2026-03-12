@@ -1,81 +1,175 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>3D Car Customizer</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<link rel="stylesheet" href="style.css">
-
-<!-- Three.js CDN -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.128/examples/js/controls/OrbitControls.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3D Car Customizer Pro</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Three.js CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128/examples/js/controls/OrbitControls.js"></script>
 </head>
-
 <body>
 
-<header>
-  <h1>🚗 3D Car Customization Studio</h1>
-</header>
+  <!-- TOP NAVIGATION BAR -->
+  <nav class="navbar">
+    <div class="nav-content">
+      <div class="logo">🚗 CarStudio Pro</div>
+      <div class="nav-info">3D Car Customization Platform</div>
+    </div>
+  </nav>
 
-<div class="container">
-
-  <!-- 3D VIEW -->
-  <div class="viewer">
-    <div id="car3d"></div>
+  <!-- LOADING SCREEN -->
+  <div id="loading-screen" class="loading-screen">
+    <div class="spinner"></div>
+    <p>Loading 3D Engine...</p>
   </div>
 
-  <!-- CUSTOMIZATION -->
-  <div class="panel">
-
-    <h2>Customize Your Car</h2>
-
-    <!-- MODEL -->
-    <label>Car Model</label>
-    <select id="model">
-      <option value="20000">Sedan</option>
-      <option value="26000">SUV (+6000)</option>
-      <option value="32000">Sports (+12000)</option>
-    </select>
-
-    <!-- COLOR -->
-    <label>Color</label>
-    <input type="color" id="colorPicker" value="#ff0000">
-
-    <!-- ENGINE -->
-    <label>Engine Type</label>
-    <select id="engine">
-      <option value="0">Petrol</option>
-      <option value="1500">Diesel (+1500)</option>
-      <option value="3000">Hybrid (+3000)</option>
-      <option value="5000">Electric (+5000)</option>
-    </select>
-
-    <!-- INTERIOR -->
-    <label>Interior</label>
-    <select id="interior">
-      <option value="0">Fabric</option>
-      <option value="2000">Leather (+2000)</option>
-      <option value="3500">Luxury (+3500)</option>
-    </select>
-
-    <!-- PRICE -->
-    <div class="price">
-      Total Price: $<span id="price">20000</span>
+  <div class="main-container">
+    <!-- MAIN 3D VIEWER -->
+    <div class="viewer-section">
+      <div class="viewer-header">
+        <h2>3D Car Viewer</h2>
+        <div class="viewer-controls-info">Use mouse: drag to rotate • scroll to zoom • right-click to pan</div>
+      </div>
+      <div id="car3d" class="car-canvas"></div>
+      <div class="viewer-footer">
+        <button id="reset-view-btn" class="btn-secondary">Reset View</button>
+        <button id="screenshot-btn" class="btn-primary">📸 Screenshot</button>
+      </div>
     </div>
 
-    <!-- BUTTONS -->
-    <button onclick="saveConfig()">Save Needs</button>
-    <button onclick="editConfig()">Edit Needs</button>
+    <!-- CUSTOMIZATION SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <h2>Customization Panel</h2>
+      </div>
 
-    <!-- FEEDBACK -->
-    <h3>Customer Feedback</h3>
-    <textarea id="feedback"></textarea>
-    <button onclick="saveFeedback()">Submit Feedback</button>
+      <div class="sidebar-content">
 
+        <!-- CAR MODEL SELECTION -->
+        <div class="control-group">
+          <h3>🏎️ Car Model</h3>
+          <select id="car-model" class="input-select">
+            <option value="sedan">Sedan (Base)</option>
+            <option value="suv">SUV (Large)</option>
+            <option value="sports">Sports Car (Fast)</option>
+            <option value="electric">Electric (Modern)</option>
+          </select>
+        </div>
+
+        <!-- EXTERIOR COLOR -->
+        <div class="control-group">
+          <h3>🎨 Body Color</h3>
+          <input type="color" id="body-color" class="input-color" value="#ff0000">
+          <div class="color-presets">
+            <button class="color-preset" style="background:#ff0000" data-color="#ff0000" title="Red"></button>
+            <button class="color-preset" style="background:#0000ff" data-color="#0000ff" title="Blue"></button>
+            <button class="color-preset" style="background:#000000" data-color="#000000" title="Black"></button>
+            <button class="color-preset" style="background:#ffffff" data-color="#ffffff" title="White"></button>
+            <button class="color-preset" style="background:#ffff00" data-color="#ffff00" title="Yellow"></button>
+            <button class="color-preset" style="background:#ff6600" data-color="#ff6600" title="Orange"></button>
+          </div>
+        </div>
+
+        <!-- WHEEL CUSTOMIZATION -->
+        <div class="control-group">
+          <h3>⚙️ Wheels & Rims</h3>
+          <label>Wheel Style</label>
+          <select id="wheel-style" class="input-select">
+            <option value="standard">Standard</option>
+            <option value="sport">Sport</option>
+            <option value="luxury">Luxury</option>
+            <option value="racing">Racing</option>
+          </select>
+
+          <label>Rim Size</label>
+          <input type="range" id="rim-size" min="0.4" max="0.7" step="0.05" value="0.55" class="input-slider">
+          <span id="rim-size-display">0.55</span> units
+        </div>
+
+        <!-- SUSPENSION & HEIGHT -->
+        <div class="control-group">
+          <h3>📏 Suspension & Height</h3>
+          <label>Ground Clearance</label>
+          <input type="range" id="suspension" min="0.3" max="1.2" step="0.1" value="0.8" class="input-slider">
+          <span id="suspension-display">0.8</span> units
+        </div>
+
+        <!-- WINDOWS -->
+        <div class="control-group">
+          <h3>🪟 Windows</h3>
+          <label>Window Tint Level</label>
+          <input type="range" id="window-tint" min="0" max="0.8" step="0.1" value="0" class="input-slider">
+          <span id="tint-display">0%</span> tint
+        </div>
+
+        <!-- HEADLIGHTS -->
+        <div class="control-group">
+          <h3>💡 Headlights</h3>
+          <label>Headlight Type</label>
+          <select id="headlight-type" class="input-select">
+            <option value="standard">Standard (White)</option>
+            <option value="led">LED (Bright Yellow)</option>
+            <option value="laser">Laser (Cyan)</option>
+          </select>
+          <label>Headlight Color</label>
+          <input type="color" id="headlight-color" class="input-color" value="#ffffff">
+        </div>
+
+        <!-- SPOILER -->
+        <div class="control-group">
+          <h3>🏁 Spoiler & Body Kits</h3>
+          <label class="checkbox-label">
+            <input type="checkbox" id="spoiler-toggle" class="input-checkbox">
+            Add Rear Spoiler
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" id="body-kit-toggle" class="input-checkbox">
+            Add Side Body Kit
+          </label>
+        </div>
+
+        <!-- EXHAUST -->
+        <div class="control-group">
+          <h3>🔥 Exhaust System</h3>
+          <label>Exhaust Type</label>
+          <select id="exhaust-type" class="input-select">
+            <option value="single">Single Exhaust</option>
+            <option value="dual">Dual Exhaust</option>
+            <option value="quad">Quad Exhaust</option>
+          </select>
+        </div>
+
+        <!-- INTERIOR COLOR -->
+        <div class="control-group">
+          <h3>🪑 Interior Color</h3>
+          <select id="interior-color" class="input-select">
+            <option value="#cccccc">Fabric Gray</option>
+            <option value="#222222">Leather Black</option>
+            <option value="#7f4e1e">Leather Tan</option>
+            <option value="#8b0000">Leather Burgundy</option>
+          </select>
+        </div>
+
+      </div>
+
+      <!-- SIDEBAR FOOTER -->
+      <div class="sidebar-footer">
+        <div class="price-display">
+          <span>Estimated Price:</span>
+          <strong id="price-display">$45,000</strong>
+        </div>
+
+        <div class="action-buttons">
+          <button id="save-config-btn" class="btn-primary">💾 Save Config</button>
+          <button id="load-config-btn" class="btn-secondary">📂 Load Config</button>
+          <button id="reset-config-btn" class="btn-secondary">🔄 Reset All</button>
+        </div>
+      </div>
+    </aside>
   </div>
-</div>
 
-<script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
